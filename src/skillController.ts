@@ -29,7 +29,7 @@ async function updateUserSkill(req: Request, res: Response) {
   try {
     const id = req.query.id as string;
     const { domainName, skillName } = req.body;
-    const updateUserSkill = await prisma.skill.updateMany({
+    const updateUserSkill = await prisma.skill.update({
       where: {
         id,
       },
