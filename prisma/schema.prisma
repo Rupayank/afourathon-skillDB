@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Skill {
-  id          String      @id @default(uuid())
-  userId      String 
-  domainName  String
-  skillName   String      @unique
+  id         String @id @default(uuid())
+  userId     String
+  domainName String
+  skillName  String
 }
