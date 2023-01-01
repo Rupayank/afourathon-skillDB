@@ -32,3 +32,8 @@ export const getSkill = async (
   });
   return skill;
 };
+
+export const getSkillByUserId = async (userId: string): Promise<Skill[]> => {
+  const skills = await prisma.skill.findMany({ where: { userId } });
+  return skills;
+};
