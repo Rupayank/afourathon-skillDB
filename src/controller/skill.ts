@@ -32,6 +32,11 @@ async function updateUserSkill(req: Request, res: Response) {
   if (!id) {
     throw new BadRequestError('Id should be prsent');
   }
+
+  const isSkillExist = await getSkillByUserIdAndSkillId(id, req.currentUser.id);
+  if (!isSkillExist) {
+    throw new BadRequestError('Invalid skill Id');
+  }
   try {
     const { domainName, skillName } = req.body;
     await updateSkillById(id, req.currentUser.id, domainName, skillName);

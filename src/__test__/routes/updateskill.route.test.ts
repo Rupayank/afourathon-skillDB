@@ -57,7 +57,7 @@ describe('Update Skill Route', () => {
       .expect(400);
   });
   
-  it('Update a skill with valid inputs', async () => {
+  it('return 400 if invalid skill id is provided', async () => {
     const payload = {
         domainName: "Tech",
         skillName: [
@@ -65,6 +65,37 @@ describe('Update Skill Route', () => {
             "python"
         ]
     }
+
+    const isSkillExist = jest
+    .spyOn(handlers, 'getSkillByUserIdAndSkillId')
+    //@ts-ignore
+    .mockReturnValueOnce();
+  
+    const response = await request(app)
+      .put(`/skill?id=sadadasdas`)
+      .set('Cookie', global.signin(userId))
+      .send(payload)
+      .expect(400);
+    
+    expect(isSkillExist).toBeCalledWith("sadadasdas",userId)  
+  });
+
+  it('Update a skill with valid inputs', async () => {
+    const payload = {
+        id: skillId,
+        userId: userId,
+        domainName: "Tech",
+        skillName: [
+            "C++",
+            "python"
+        ]
+    }
+
+    const isSkillExist = jest
+    .spyOn(handlers, 'getSkillByUserIdAndSkillId')
+    //@ts-ignore
+    .mockReturnValueOnce(payload);
+
     const skill= jest
     .spyOn(handlers,"updateSkillById")
       //@ts-ignore
@@ -78,7 +109,7 @@ describe('Update Skill Route', () => {
       .send(payload)
       .expect(200);
     
-    expect(skill).toBeCalledWith(skillId,userId,payload.domainName,payload.skillName)  
+    expect(skill).toBeCalledWith(payload.id,payload.userId,payload.domainName,payload.skillName)  
     expect(response.body.message).toEqual("User Skill updated")
   });
 

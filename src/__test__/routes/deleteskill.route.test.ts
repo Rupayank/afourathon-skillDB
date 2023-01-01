@@ -26,11 +26,11 @@ describe('Delete Skill Route', () => {
       .mockReturnValueOnce();
 
     const response = await request(app)
-      .delete(`/skill?id=${skillId}`)
+      .delete(`/skill?id=sasasas`)
       .set('Cookie', global.signin(userId))
       .expect(400);
 
-    expect(isSkillExist).toBeCalledWith(skillId, userId);
+    expect(isSkillExist).toBeCalledWith("sasasas", userId);
   });
 
   it('Delete a skill with valid id', async () => {
