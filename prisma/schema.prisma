@@ -14,5 +14,5 @@ model Skill {
   id         String @id @default(uuid())
   userId     String
   domainName String
-  skillName  String
+  skillName  String[]
 }
