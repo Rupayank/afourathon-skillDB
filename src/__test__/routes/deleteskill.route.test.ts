@@ -30,7 +30,7 @@ describe('Delete Skill Route', () => {
       .set('Cookie', global.signin(userId))
       .expect(400);
 
-    expect(isSkillExist).toBeCalledWith("sasasas", userId);
+    expect(isSkillExist).toBeCalledWith('sasasas', userId);
   });
 
   it('Delete a skill with valid id', async () => {

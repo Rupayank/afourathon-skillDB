@@ -1,6 +1,6 @@
-export default interface Skill{
-    id: string
-    userId: string
-    domainName: string,
-    skillName: Array<string>
+export default interface Skill {
+  id: string;
+  userId: string;
+  domainName: string;
+  skillName: Array<string>;
 }

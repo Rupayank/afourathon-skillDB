@@ -33,8 +33,7 @@ describe('Get Skill Route', () => {
     const response = await request(app).get('/skill').set('Cookie', global.signin(userId));
 
     expect(response.status).not.toEqual(401);
-    expect(skills).toBeCalledWith(userId)
+    expect(skills).toBeCalledWith(userId);
     expect(response.body.response).toEqual(payload);
   });
-  
 });

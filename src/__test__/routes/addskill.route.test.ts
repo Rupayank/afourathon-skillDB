@@ -1,9 +1,9 @@
 import request from 'supertest';
 import app from '../../server';
-import * as handlers from '../../handlers/skill'
+import * as handlers from '../../handlers/skill';
 
 describe('Add Skill Route', () => {
-  const userId = "1390266c-ddc8-445d-a1d0-66c5e9e1f759"
+  const userId = '1390266c-ddc8-445d-a1d0-66c5e9e1f759';
   it('can only be accessed if the user is signed in', async () => {
     await request(app).post('/skill').send({}).expect(401);
   });
@@ -13,7 +13,7 @@ describe('Add Skill Route', () => {
       .post('/skill')
       .set('Cookie', global.signin(userId))
       .send({});
-  
+
     expect(response.status).not.toEqual(401);
   });
 
@@ -26,7 +26,7 @@ describe('Add Skill Route', () => {
         skillName: ['Javascript'],
       })
       .expect(400);
-  
+
     await request(app)
       .post('/skill')
       .set('Cookie', global.signin(userId))
@@ -35,7 +35,7 @@ describe('Add Skill Route', () => {
       })
       .expect(400);
   });
-  
+
   it('returns an error if an invalid skillName is provided', async () => {
     await request(app)
       .post('/skill')
@@ -45,7 +45,7 @@ describe('Add Skill Route', () => {
         skillName: '',
       })
       .expect(400);
-  
+
     await request(app)
       .post('/skill')
       .set('Cookie', global.signin(userId))
@@ -54,37 +54,29 @@ describe('Add Skill Route', () => {
       })
       .expect(400);
   });
-  
+
   it('creates a skill with valid inputs', async () => {
     const payload = {
-        id: "63810918-a966-4f31-bdd6-f873c7a8ad86",
-        userId: userId,
-        domainName: "Tech",
-        skillName: [
-            "C++",
-            "python"
-        ]
-    }
-    const skill= jest
-    .spyOn(handlers,'addSkill')
+      id: '63810918-a966-4f31-bdd6-f873c7a8ad86',
+      userId: userId,
+      domainName: 'Tech',
+      skillName: ['C++', 'python'],
+    };
+    const skill = jest
+      .spyOn(handlers, 'addSkill')
       //@ts-ignore
-    .mockReturnValueOnce(payload)
-  
-  
+      .mockReturnValueOnce(payload);
+
     const response = await request(app)
       .post('/skill')
       .set('Cookie', global.signin(userId))
       .send({
-        domainName: "Tech",
-        skillName: [
-            "C++",
-            "python"
-        ]
+        domainName: 'Tech',
+        skillName: ['C++', 'python'],
       })
       .expect(201);
-    
-    expect(skill).toBeCalledWith(payload.userId,payload.domainName,payload.skillName)  
+
+    expect(skill).toBeCalledWith(payload.userId, payload.domainName, payload.skillName);
     expect(response.body.response).toEqual(payload);
   });
-
 });
