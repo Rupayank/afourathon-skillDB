@@ -37,3 +37,25 @@ export const getSkillByUserId = async (userId: string): Promise<Skill[]> => {
   const skills = await prisma.skill.findMany({ where: { userId } });
   return skills;
 };
+
+export const updateSkillById = async (
+  id: string,
+  userId:string,
+  domainName: string,
+  skillName: Array<string>,
+) => {
+  const skill = await prisma.skill.updateMany({
+    where: {
+      id,
+      AND: {
+        userId: userId,
+      }  
+    },
+    data: {
+      domainName,
+      skillName
+    },
+  });
+
+  return skill
+};
