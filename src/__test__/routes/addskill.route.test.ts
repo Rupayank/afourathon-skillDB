@@ -78,7 +78,7 @@ describe('Add Skill Route', () => {
         domainName: "Tech",
         skillName: [
             "C++",
-            "java"
+            "python"
         ]
       })
       .expect(201);
