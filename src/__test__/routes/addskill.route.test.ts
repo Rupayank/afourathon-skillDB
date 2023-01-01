@@ -62,7 +62,7 @@ describe('Add Skill Route', () => {
         domainName: "Tech",
         skillName: [
             "C++",
-            "java"
+            "python"
         ]
     }
     const skill= jest
@@ -78,7 +78,7 @@ describe('Add Skill Route', () => {
         domainName: "Tech",
         skillName: [
             "C++",
-            "java"
+            "python"
         ]
       })
       .expect(201);
