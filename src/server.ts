@@ -3,9 +3,14 @@ import morgan from 'morgan';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { requestValidate } from './middlewares/request-schema-validate';
-// import { getUserSkill, updateUserSkill, deleteUserSkill } from './skillController';
-import {validateRequest, errorHandler, NotFoundError, currentUser,requireAuth} from '@hackathonskilldb/common-middlewares'
-import addUserSkill from './controller/add-user-skill';
+import {
+  validateRequest,
+  errorHandler,
+  NotFoundError,
+  currentUser,
+  requireAuth,
+} from '@hackathonskilldb/common-middlewares';
+import { addUserSkill, getUserSkill, updateUserSkill, deleteUserSkill } from './controller/skill';
 
 const app = express();
 
@@ -17,8 +22,8 @@ app.set('trust proxy', true);
 app.use(
   cookieSession({
     signed: false,
-    secure: false
-  })
+    secure: false,
+  }),
 );
 
 app.get('/healthcheck', (req, res) => {
@@ -26,19 +31,18 @@ app.get('/healthcheck', (req, res) => {
   res.json({ message: 'server is live' });
 });
 
-app.use(currentUser)
+app.use(currentUser);
 
 // Routes
-// app.get('/skill', getUserSkill);
-app.post('/skill',requireAuth,requestValidate,validateRequest, addUserSkill);
-// app.put('/skill', requireAuth,updateUserSkill);
-// app.delete('/skill', requireAuth,deleteUserSkill);
+app.get('/skill', requireAuth, getUserSkill);
+app.post('/skill', requireAuth, requestValidate, validateRequest, addUserSkill);
+app.put('/skill', requireAuth, requestValidate, validateRequest, updateUserSkill);
+app.delete('/skill', requireAuth, deleteUserSkill);
 
-app.all("*", async (req, res) => {
+app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 
 app.use(errorHandler);
-
 
 export default app;
