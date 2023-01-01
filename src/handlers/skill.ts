@@ -38,9 +38,22 @@ export const getSkillByUserId = async (userId: string): Promise<Skill[]> => {
   return skills;
 };
 
+export const getSkillByUserIdAndSkillId = async (id: string, userId: string): Promise<Skill> => {
+  console.log(id);
+  const skills = await prisma.skill.findFirst({
+    where: {
+      id: id,
+      AND: {
+        userId: userId,
+      },
+    },
+  });
+  return skills;
+};
+
 export const updateSkillById = async (
   id: string,
-  userId:string,
+  userId: string,
   domainName: string,
   skillName: Array<string>,
 ) => {
@@ -49,13 +62,17 @@ export const updateSkillById = async (
       id,
       AND: {
         userId: userId,
-      }  
+      },
     },
     data: {
       domainName,
-      skillName
+      skillName,
     },
   });
 
-  return skill
+  return skill;
+};
+
+export const deleteUserSkillById = async (id: string) => {
+  return prisma.skill.delete({ where: { id } });
 };

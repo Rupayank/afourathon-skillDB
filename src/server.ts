@@ -5,7 +5,7 @@ import cookieSession from 'cookie-session';
 import { requestValidate } from './middlewares/request-schema-validate';
 // import { getUserSkill, updateUserSkill, deleteUserSkill } from './skillController';
 import {validateRequest, errorHandler, NotFoundError, currentUser,requireAuth} from '@hackathonskilldb/common-middlewares'
-import {addUserSkill,getUserSkill, updateUserSkill} from './controller/skill';
+import {addUserSkill,getUserSkill, updateUserSkill,deleteUserSkill} from './controller/skill';
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.use(currentUser)
 app.get('/skill', requireAuth,getUserSkill);
 app.post('/skill',requireAuth,requestValidate,validateRequest, addUserSkill);
 app.put('/skill', requireAuth,requestValidate,validateRequest,updateUserSkill);
-// app.delete('/skill', requireAuth,deleteUserSkill);
+app.delete('/skill', requireAuth,deleteUserSkill);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();
