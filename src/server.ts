@@ -11,12 +11,22 @@ import {
   requireAuth,
 } from '@hackathonskilldb/common-middlewares';
 import { addUserSkill, getUserSkill, updateUserSkill, deleteUserSkill } from './controller/skill';
+import cors from 'cors'
 
 const app = express();
+const corsOptions = {
+  //To allow requests from client
+  origin: [
+    "http://localhost:3000",
+  ],
+  credentials: true,
+  // exposedHeaders: ["set-cookie"],
+}
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions))
 
 app.set('trust proxy', true);
 app.use(

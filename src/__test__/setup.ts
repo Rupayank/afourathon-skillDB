@@ -1,16 +1,21 @@
 import { randomUUID } from 'crypto';
 import jwt from 'jsonwebtoken';
+import * as asb from '../utils/asb-events';
 
 declare global {
-  var signin: (userId:string) => string[];
+  var signin: (userId: string) => string[];
 }
 
 beforeAll(async () => {
   process.env.JWT_KEY = 'asdfasdf';
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  jest
+    .spyOn(asb, 'sendMessage')
+    //@ts-ignore
+    .mockReturnValueOnce();
 });
 
-global.signin = (userId:string) => {
+global.signin = (userId: string) => {
   const payload = {
     id: userId,
     email: 'test@test.com',
