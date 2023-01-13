@@ -33,7 +33,7 @@ async function addUserSkill(req: Request, res: Response) {
 async function getUserSkill(req: Request, res: Response) {
   try {
     const skill = await getSkillByUserId(req.currentUser.id);
-    res.status(200).send({ message: 'All User Skills', response: skill });
+    res.status(200).send({ message: 'User Skills', response: skill });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
